@@ -16,17 +16,24 @@
   font-family: Helvetica, Arial, sans-serif
 }
 .td-trader-main-content {
-  padding-top: 9rem;
-  padding-bottom: 10rem;
+  padding-top: 3rem;
   background: #fbfcf5;
+  padding-bottom: 7rem;
+  text-align: center;
 }
 
 .td-trader-main-content__logo {
   width: 380px;
 }
 
+.td-trader-main-content__logo--small {
+  width: 200px;
+  margin: 0 auto;
+  display: block;
+}
+
 .td-trader-main-content .btn.btn-primary {
-  margin-top: 2rem;
+  margin-top: 1rem;
   background: #d16c55;
   border-color: #d16c55;
   font-weight: bold;
@@ -48,8 +55,9 @@
 }
 
 .td-trader-main-content h1 {
-  font-size: 4rem;
-  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   color: #146f63;
 }
 
@@ -58,13 +66,13 @@
 }
 
 .td-trader-footer {
-  padding-top: 6rem;
   padding-bottom: 4rem;
   color: #fbfcf5;
   background: #146f63;
 }
 
 .td-trader-footer h2 {
+  margin-top: 4rem;
   margin-bottom: 2rem;
 }
 
@@ -84,6 +92,7 @@
   color: #146f63;
   border-color: #fbfcf5;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .td-trader-footer__subscribe-form .form-control{
@@ -103,3 +112,28 @@
 .td-trader-footer__subscribe-form input:-ms-input-placeholder {  
   color: #fbfcf5;  
 }
+
+
+
+@media (min-width: 576px) {
+  
+ }
+
+@media (min-width: 768px) {
+  
+}
+
+@media (min-width: 992px) { 
+  .td-trader-main-content {
+    padding-top: 9rem;
+    padding-bottom: 13rem;
+    text-align: left;
+  }
+  .td-trader-main-content h1{
+    font-size: 3.7rem;
+  }
+ }
+
+@media (min-width: 1200px) { 
+  
+ }

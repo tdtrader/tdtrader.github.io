@@ -5,8 +5,13 @@ export const MainContent = () => {
     return (
         <div className="td-trader-main-content">
           <div className="container">
-            <div className="row">
-              <div className="col col-md-4">
+            <div className="row justify-content-md-center d-lg-none">
+              <div className="col">
+                <img src={logo} className=" td-trader-main-content__logo td-trader-main-content__logo--small" alt="logo" />
+              </div>
+            </div>
+            <div className="row justify-content-lg-center">
+              <div className="col col-md-12 col-lg-4">
                 <h1>Sequential Countdown Tracker</h1>
                 <p>
                   TDtrader is a Telegram bot that keeps you up to date on the current TD count.
@@ -17,7 +22,7 @@ export const MainContent = () => {
                   <span><i className="fab fa-telegram-plane"></i></span>
                 </button>
               </div>
-              <div className="col col-md-6">
+              <div className="col col-lg-5 d-none d-lg-block">
                 <img src={logo} className="td-trader-main-content__logo" alt="logo" />
               </div>
             </div>

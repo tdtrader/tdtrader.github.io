@@ -4,8 +4,8 @@ export const Footer = () => {
   return (
     <div className="td-trader-footer">
       <div className="container">
-        <div className="row">
-          <div className="col col-md-4">
+        <div className="row justify-content-lg-center">
+          <div className="col col-12 col-sm-12 col-md-8 col-lg-4">
             <h2>Get updates</h2>
             <p>
               We are working on more features such as additional currency pairs, timeframes and exchanges.
@@ -18,9 +18,8 @@ export const Footer = () => {
                 <button className="btn btn-outline-secondary" type="button">Subscribe</button>
               </div>
             </div>
-
           </div>
-          <div className="col col-md-6 td-trader-footer__disclaimer">
+          <div className="col col-12 col-sm-12 col-md-12 col-lg-5 td-trader-footer__disclaimer">
             <h2>Disclaimer</h2>
             <p>
               Before using this Telegram bot, please make sure that you note the following important information:
