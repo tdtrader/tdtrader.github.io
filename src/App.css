@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400, 700');
-
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400, 700");
 
 .td-trader h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 700;
 }
 
 .td-trader h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 400;
 }
 
 .td-trader p,
 .td-trader h3 {
-  font-family: Helvetica, Arial, sans-serif
+  font-family: Helvetica, Arial, sans-serif;
 }
 .td-trader-main-content {
   padding-top: 3rem;
@@ -49,7 +48,7 @@
   border-color: #af4f39;
 }
 
-.td-trader-main-content .btn span{
+.td-trader-main-content .btn span {
   padding-left: 1rem;
   font-weight: normal;
 }
@@ -95,8 +94,8 @@
   font-size: 0.9rem;
 }
 
-.td-trader-footer__subscribe-form .form-control{
-  background: #146f63; 
+.td-trader-footer__subscribe-form .form-control {
+  background: #146f63;
   color: #fbfcf5;
 }
 
@@ -104,36 +103,31 @@
   color: #fbfcf5;
 }
 .td-trader-footer__subscribe-form input:-moz-placeholder {
-  color: #fbfcf5;  
-} 
-.td-trader-footer__subscribe-form input::-moz-placeholder {
-  color: #fbfcf5;  
-}  
-.td-trader-footer__subscribe-form input:-ms-input-placeholder {  
-  color: #fbfcf5;  
+  color: #fbfcf5;
 }
-
-
+.td-trader-footer__subscribe-form input::-moz-placeholder {
+  color: #fbfcf5;
+}
+.td-trader-footer__subscribe-form input:-ms-input-placeholder {
+  color: #fbfcf5;
+}
 
 @media (min-width: 576px) {
-  
- }
-
-@media (min-width: 768px) {
-  
 }
 
-@media (min-width: 992px) { 
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
   .td-trader-main-content {
-    padding-top: 9rem;
+    padding-top: 4rem;
     padding-bottom: 13rem;
     text-align: left;
   }
-  .td-trader-main-content h1{
+  .td-trader-main-content h1 {
     font-size: 3.7rem;
   }
- }
+}
 
-@media (min-width: 1200px) { 
-  
- }
+@media (min-width: 1200px) {
+}
