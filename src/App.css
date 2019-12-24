@@ -112,6 +112,25 @@
   color: #fbfcf5;
 }
 
+.td-trader-count-table {
+  margin-top: 3rem;
+  border: 1px solid red;
+}
+
+.td-trader-loading-data,
+.td-trader-fetch-error {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 4rem;
+  color: #146f63;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.td-trader-fetch-error {
+  color: red;
+  font-weight: bold;
+}
+
 @media (min-width: 576px) {
 }
 
