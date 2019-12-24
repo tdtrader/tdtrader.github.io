@@ -33,6 +33,7 @@
 
 .td-trader-main-content .btn.btn-primary {
   margin-top: 1rem;
+  margin-bottom: 2rem;
   background: #d16c55;
   border-color: #d16c55;
   font-weight: bold;
@@ -112,9 +113,42 @@
   color: #fbfcf5;
 }
 
+.td-trader-count-table-metadata {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  color: #555555;
+}
+
+.td-trader-count-table-metadata div {
+  margin-right: 1rem;
+}
+
+.td-trader-count-table-metadata button {
+  margin-right: 0.5rem;
+}
+
 .td-trader-count-table {
-  margin-top: 3rem;
-  border: 1px solid red;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.td-trader-count-table tr:nth-child(odd) {
+  background: #faedea;
+}
+
+.td-trader-count-table th {
+  color: #353535;
+}
+
+.td-trader-count-table th input {
+  width: 100%;
+}
+
+.td-trader-count-table thead tr {
+  cursor: pointer;
+  user-select: none;
+  background: none !important;
 }
 
 .td-trader-loading-data,
@@ -123,7 +157,6 @@
   text-align: center;
   margin-top: 4rem;
   color: #146f63;
-  font-family: "Courier New", Courier, monospace;
 }
 
 .td-trader-fetch-error {

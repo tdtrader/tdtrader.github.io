@@ -1,15 +1,26 @@
 import * as React from "react";
 import logo from "../logo.svg";
+import { CountTable, SortType } from "./count-table";
+import { LoadingIndicator } from "./loading-indicator";
+import { ErrorMessage } from "./error-message";
+import { TableMetaData } from "./table-metadata";
 
 const TELEGRAM_URL = "http://t.me/TDupdater_bot";
-const TICKER_URL = "https://tdtrader-cc108.firebaseio.com/.json";
+const TICKER_URL = "https://tdtrader-cc108.firebaseio.com/stocks/.json";
 
 export class MainContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: null,
-      error: null
+      error: null,
+      totalRows: 0,
+      rowShowCount: 100,
+      lastFetch: null,
+      sortType: SortType.CountAscending,
+      tickerFilter: null,
+      countFilter: null,
+      nameFilter: null
     };
   }
   componentDidMount() {
@@ -33,10 +44,19 @@ export class MainContent extends React.Component {
         tdCount: unformattedData[key]["TD_count"]
       });
     });
-    this.setState({ data, error: null });
+    this.setState({
+      data,
+      error: null,
+      totalRows: data.length,
+      lastFetch: Date.now()
+    });
   }
 
   render() {
+    const sortedData = this.sortData();
+    const filteredData = this.filterData(sortedData);
+    const slicedData = filteredData.slice(0, this.state.rowShowCount);
+
     return (
       <div className="td-trader-main-content">
         <div className="container">
@@ -75,28 +95,40 @@ export class MainContent extends React.Component {
           <div className="row justify-content-lg-center">
             <div className="col col-md-12 col-lg-9">
               {this.state.data ? (
-                <table className="td-trader-count-table">
-                  <tr>
-                    <th>Ticker</th>
-                    <th>TD Count</th>
-                    <th>Name</th>
-                  </tr>
-                  {this.state.data.map(d => {
-                    return (
-                      <tr>
-                        <td>{d.ticker}</td>
-                        <td>{d.tdCount}</td>
-                        <td>{d.name}</td>
-                      </tr>
-                    );
-                  })}
-                </table>
+                <React.Fragment>
+                  <TableMetaData
+                    totalRows={this.state.totalRows}
+                    rowShowCount={slicedData.length}
+                    show100More={this.show100More}
+                    showAllRows={this.showAllRows}
+                    showTop100={this.showTop100}
+                    lastFetch={this.state.lastFetch}
+                    isFiltered={filteredData.length < sortedData.length}
+                    showActions={false}
+                  />
+                  <CountTable
+                    data={slicedData}
+                    currentSortType={this.state.sortType}
+                    setSortType={this.setSortType}
+                    onFilterTicker={this.onFilterTicker}
+                    onFilterName={this.onFilterName}
+                    onFilterCount={this.onFilterCount}
+                  />
+                  <TableMetaData
+                    totalRows={this.state.totalRows}
+                    rowShowCount={slicedData.length}
+                    show100More={this.show100More}
+                    showAllRows={this.showAllRows}
+                    showTop100={this.showTop100}
+                    lastFetch={this.state.lastFetch}
+                    isFiltered={filteredData.length < sortedData.length}
+                    showActions={true}
+                  />
+                </React.Fragment>
               ) : this.state.error ? (
-                <div className="td-trader-fetch-error">
-                  Error loading data: {this.state.error}
-                </div>
+                <ErrorMessage error={this.state.error} />
               ) : (
-                <div className="td-trader-loading-data">Loading data...</div>
+                <LoadingIndicator />
               )}
             </div>
           </div>
@@ -104,4 +136,97 @@ export class MainContent extends React.Component {
       </div>
     );
   }
+
+  onFilterTicker = value => {
+    this.setState({
+      tickerFilter: value || null
+    });
+  };
+
+  onFilterName = value => {
+    this.setState({
+      nameFilter: value || null
+    });
+  };
+
+  onFilterCount = value => {
+    this.setState({
+      countFilter: value || null
+    });
+  };
+
+  setSortType = sortType => {
+    this.setState({
+      sortType
+    });
+  };
+
+  show100More = () => {
+    this.setState({
+      rowShowCount: this.state.rowShowCount + 100
+    });
+  };
+
+  showAllRows = () => {
+    this.setState({
+      rowShowCount: this.state.totalRows
+    });
+  };
+
+  showTop100 = () => {
+    this.setState({
+      rowShowCount: 100
+    });
+  };
+
+  sortData = () => {
+    const data = this.state.data;
+    if (!data) return [];
+
+    let sortedData;
+
+    switch (this.state.sortType) {
+      case SortType.AlphabeticallyAscending:
+        sortedData = data.sort((a, b) => {
+          return a.ticker < b.ticker ? -1 : b.ticker > a.ticker ? 1 : 0;
+        });
+        break;
+      case SortType.AlphabeticallyDescending:
+        sortedData = data.sort((a, b) => {
+          return b.ticker < a.ticker ? -1 : a.ticker > b.ticker ? 1 : 0;
+        });
+        break;
+      case SortType.CountAscending:
+        sortedData = data.sort((a, b) => {
+          return b.tdCount < a.tdCount ? -1 : a.tdCount > b.tdCount ? 1 : 0;
+        });
+        break;
+      case SortType.CountDescending:
+        sortedData = data.sort((a, b) => {
+          return a.tdCount < b.tdCount ? -1 : b.tdCount > a.tdCount ? 1 : 0;
+        });
+        break;
+      default:
+        sortedData = data;
+    }
+
+    return sortedData;
+  };
+
+  filterData = data => {
+    const { countFilter, tickerFilter, nameFilter } = this.state;
+
+    const filteredData = data.filter(d => {
+      const tickerFilterResult =
+        !tickerFilter ||
+        d.ticker.toLowerCase().includes(tickerFilter.toLowerCase());
+      const nameFilterResult =
+        !nameFilter || d.name.toLowerCase().includes(nameFilter.toLowerCase());
+      const countFilterResult =
+        !countFilter || d.tdCount === parseInt(countFilter, 10);
+      return countFilterResult && tickerFilterResult && nameFilterResult;
+    });
+
+    return filteredData;
+  };
 }
