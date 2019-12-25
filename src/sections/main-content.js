@@ -39,7 +39,7 @@ export class MainContent extends React.Component {
       data.push({
         ticker: key,
         name: unformattedData[key].name,
-        tdCount: unformattedData[key]["TD_count"]
+        tdCount: unformattedData[key].tdCount
       });
     });
     this.setState({
