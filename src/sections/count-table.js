@@ -50,20 +50,20 @@ export const CountTable = ({
           <th>Name</th>
         </tr>
         <tr>
-          <th width="100px">
+          <th>
             <input
               placeholder="Filter ticker"
               onChange={e => onFilterTicker(e.target.value)}
             />
           </th>
-          <th width="100px">
+          <th>
             <input
               placeholder="Filter count"
               type="number"
               onChange={e => onFilterCount(e.target.value)}
             />
           </th>
-          <th width="300px">
+          <th>
             <input
               placeholder="Filter name"
               onChange={e => onFilterName(e.target.value)}
@@ -76,9 +76,9 @@ export const CountTable = ({
         {data.map(d => {
           return (
             <tr key={d.ticker}>
-              <td width="90px">{d.ticker}</td>
-              <td width="80px">{d.tdCount}</td>
-              <td width="330px">{d.name}</td>
+              <td>{d.ticker}</td>
+              <td>{d.tdCount}</td>
+              <td>{d.name}</td>
             </tr>
           );
         })}

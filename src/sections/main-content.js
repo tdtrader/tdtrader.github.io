@@ -1,5 +1,4 @@
 import * as React from "react";
-import logo from "../logo.svg";
 import { CountTable, SortType } from "./count-table";
 import { LoadingIndicator } from "./loading-indicator";
 import { ErrorMessage } from "./error-message";
@@ -72,29 +71,11 @@ export class MainContent extends React.Component {
     return (
       <div className="td-trader-main-content">
         <div className="container">
-          <div className="row justify-content-md-center d-lg-none">
-            <div className="col">
-              <img
-                src={logo}
-                className="td-trader-main-content__logo td-trader-main-content__logo--small"
-                alt="logo"
-              />
-            </div>
-          </div>
-          <div className="row justify-content-lg-center">
-            <div className="col col-md-12 col-lg-4">
+          <div className="row justify-content-between">
+            <div className="col col-sm-12 col-md-12 col-lg-4">
               <IntroSection />
             </div>
-            <div className="col col-lg-5 d-none d-lg-block">
-              <img
-                src={logo}
-                className="td-trader-main-content__logo"
-                alt="logo"
-              />
-            </div>
-          </div>
-          <div className="row justify-content-lg-center">
-            <div className="col col-md-12 col-lg-9">
+            <div className="col col-sm-12 col-md-12 col-lg-7">
               {this.state.data ? (
                 <React.Fragment>
                   {this.getMetaDataComponent(

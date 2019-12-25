@@ -22,13 +22,8 @@
 }
 
 .td-trader-main-content__logo {
-  width: 380px;
-}
-
-.td-trader-main-content__logo--small {
-  width: 200px;
+  width: 150px;
   margin: 0 auto;
-  display: block;
 }
 
 .td-trader-main-content .btn.btn-primary {
@@ -171,6 +166,10 @@
 }
 
 @media (min-width: 992px) {
+  .td-trader-main-content__logo {
+    width: 290px;
+    margin-left: -30px;
+  }
   .td-trader-main-content {
     padding-top: 4rem;
     padding-bottom: 13rem;
