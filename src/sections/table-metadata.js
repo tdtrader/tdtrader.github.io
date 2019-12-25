@@ -3,12 +3,17 @@ import * as React from "react";
 export const TableMetaData = ({
   totalRows,
   rowShowCount,
-  show100More,
+  showMore,
   showAllRows,
   lastFetch,
-  isFiltered,
   showActions
 }) => {
+  let showMoreCount = 100;
+  if (rowShowCount <= totalRows) {
+    if (totalRows - rowShowCount <= 100) {
+      showMoreCount = totalRows - rowShowCount;
+    }
+  }
   return (
     <React.Fragment>
       <div className="td-trader-count-table-metadata">
@@ -27,15 +32,15 @@ export const TableMetaData = ({
       {showActions && (
         <div className="td-trader-count-table-metadata">
           <div>
-            {!isFiltered && rowShowCount + 100 <= totalRows && (
+            {showMoreCount !== 0 && (
               <button
                 className="btn btn-secondary btn-sm"
-                onClick={show100More}
+                onClick={() => showMore(showMoreCount)}
               >
-                <i className="fas fa-plus"></i> Show 100 more
+                <i className="fas fa-plus"></i> Show {showMoreCount} more
               </button>
             )}
-            {!isFiltered && rowShowCount !== totalRows && (
+            {showMoreCount !== 0 && (
               <button
                 className="btn btn-secondary btn-sm"
                 onClick={showAllRows}

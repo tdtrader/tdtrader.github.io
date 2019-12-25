@@ -4,8 +4,8 @@ import { CountTable, SortType } from "./count-table";
 import { LoadingIndicator } from "./loading-indicator";
 import { ErrorMessage } from "./error-message";
 import { TableMetaData } from "./table-metadata";
+import { IntroSection } from "./intro-section";
 
-const TELEGRAM_URL = "http://t.me/TDupdater_bot";
 const TICKER_URL = "https://tdtrader-cc108.firebaseio.com/stocks/.json";
 
 export class MainContent extends React.Component {
@@ -14,7 +14,6 @@ export class MainContent extends React.Component {
     this.state = {
       data: null,
       error: null,
-      totalRows: 0,
       rowShowCount: 100,
       lastFetch: null,
       sortType: SortType.CountAscending,
@@ -34,7 +33,7 @@ export class MainContent extends React.Component {
   }
 
   async getData() {
-    let response = await fetch(TICKER_URL);
+    let response = await fetch(TICKER_URL, { cache: "no-store" });
     let unformattedData = await response.json();
     const data = [];
     Object.keys(unformattedData).forEach(key => {
@@ -47,10 +46,23 @@ export class MainContent extends React.Component {
     this.setState({
       data,
       error: null,
-      totalRows: data.length,
       lastFetch: Date.now()
     });
   }
+
+  getMetaDataComponent = (showActions, totalRows, rowShowCount) => {
+    return (
+      <TableMetaData
+        totalRows={totalRows}
+        rowShowCount={rowShowCount}
+        showMore={this.showMore}
+        showAllRows={this.showAllRows}
+        showTop100={this.showTop100}
+        lastFetch={this.state.lastFetch}
+        showActions={showActions}
+      />
+    );
+  };
 
   render() {
     const sortedData = this.sortData();
@@ -71,18 +83,7 @@ export class MainContent extends React.Component {
           </div>
           <div className="row justify-content-lg-center">
             <div className="col col-md-12 col-lg-4">
-              <h1>Sequential Countdown Tracker</h1>
-              <p>
-                TDtrader is a Telegram bot that keeps you up to date on the
-                current TD count. You simply get a notification on every candle
-                close.
-              </p>
-              <a href={TELEGRAM_URL} className="btn btn-primary">
-                Pair with Telegram
-                <span>
-                  <i className="fab fa-telegram-plane"></i>
-                </span>
-              </a>
+              <IntroSection />
             </div>
             <div className="col col-lg-5 d-none d-lg-block">
               <img
@@ -96,16 +97,11 @@ export class MainContent extends React.Component {
             <div className="col col-md-12 col-lg-9">
               {this.state.data ? (
                 <React.Fragment>
-                  <TableMetaData
-                    totalRows={this.state.totalRows}
-                    rowShowCount={slicedData.length}
-                    show100More={this.show100More}
-                    showAllRows={this.showAllRows}
-                    showTop100={this.showTop100}
-                    lastFetch={this.state.lastFetch}
-                    isFiltered={filteredData.length < sortedData.length}
-                    showActions={false}
-                  />
+                  {this.getMetaDataComponent(
+                    false,
+                    filteredData.length,
+                    slicedData.length
+                  )}
                   <CountTable
                     data={slicedData}
                     currentSortType={this.state.sortType}
@@ -114,16 +110,11 @@ export class MainContent extends React.Component {
                     onFilterName={this.onFilterName}
                     onFilterCount={this.onFilterCount}
                   />
-                  <TableMetaData
-                    totalRows={this.state.totalRows}
-                    rowShowCount={slicedData.length}
-                    show100More={this.show100More}
-                    showAllRows={this.showAllRows}
-                    showTop100={this.showTop100}
-                    lastFetch={this.state.lastFetch}
-                    isFiltered={filteredData.length < sortedData.length}
-                    showActions={true}
-                  />
+                  {this.getMetaDataComponent(
+                    true,
+                    filteredData.length,
+                    slicedData.length
+                  )}
                 </React.Fragment>
               ) : this.state.error ? (
                 <ErrorMessage error={this.state.error} />
@@ -161,15 +152,15 @@ export class MainContent extends React.Component {
     });
   };
 
-  show100More = () => {
+  showMore = count => {
     this.setState({
-      rowShowCount: this.state.rowShowCount + 100
+      rowShowCount: this.state.rowShowCount + count
     });
   };
 
   showAllRows = () => {
     this.setState({
-      rowShowCount: this.state.totalRows
+      rowShowCount: this.state.data.length
     });
   };
 
